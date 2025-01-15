@@ -109,18 +109,83 @@ public class Model extends Observable {
     public boolean tilt(Side side) {
         boolean changed;
         changed = false;
-
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
-
+        int size = this.board.size();
+        if(side == Side.NORTH){
+            for(int col = 0;col<size;col++){
+                if(single_col_move(col, size)){
+                    changed = true;
+                }
+            }
+        }
+        else if(side == Side.EAST){
+            this.board.startViewingFrom(side);
+            for(int row = 0;row<size;row++){
+                if(single_col_move(row, size)){
+                    changed = true;
+                }
+            }
+            this.board.startViewingFrom(Side.NORTH);
+        }
+        else if(side == Side.SOUTH){
+            for(int col = 0;col<size;col++){
+                this.board.startViewingFrom(side);
+                if(single_col_move(col, size)){
+                    changed = true;
+                }
+            }
+            this.board.startViewingFrom(Side.NORTH);
+        }
+        else if(side == Side.WEST){
+            this.board.startViewingFrom(side);
+            for(int row = 0;row<size;row++){
+                if(single_col_move(row, size)){
+                    changed = true;
+                }
+            }
+            this.board.startViewingFrom(Side.NORTH);
+        }
         checkGameOver();
         if (changed) {
             setChanged();
         }
         return changed;
     }
-
+    public boolean single_col_move(int col, int size){
+        boolean flag = false;
+        for(int row = size-1;row >= 0;row--){
+            if(this.board.tile(col, row) == null){
+                for(int i = row-1;i >= 0;i--){
+                    if(this.board.tile(col, i) != null){
+                        Tile tile = this.board.tile(col, i);
+                        this.board.move(col, row, tile);
+                        flag = true;
+                        row += 1;
+                        break;
+                    }
+                }
+            }
+            else{
+                for(int i = row-1;i >= 0;i--){
+                    if(this.board.tile(col, i) != null){
+                        if(this.board.tile(col, row).value() == this.board.tile(col, i).value()){
+                            Tile tile = this.board.tile(col, i);
+                            this.board.move(col, row, tile);
+                            this.score += this.board.tile(col, row).value();
+                            flag = true;
+                            break;
+                        }
+                        else{
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return flag;
+    }
     /** Checks if the game is over and sets the gameOver variable
      *  appropriately.
      */
@@ -138,6 +203,14 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        int size = b.size();
+        for (int col = 0; col < size; col += 1) {
+            for (int row = 0; row < size; row += 1) {
+                if (b.tile(col, row) == null) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -148,6 +221,14 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        int size = b.size();
+        for(int col = 0; col < size; col += 1) {
+            for(int row = 0; row < size; row += 1) {
+                if(b.tile(col, row) != null && b.tile(col, row).value() == MAX_PIECE) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -159,6 +240,20 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        int size = b.size();
+        if(emptySpaceExists(b)) {
+            return true;
+        }
+        else {
+            for(int col = 0; col < size; col += 1) {
+                for(int row = 0; row < size; row += 1) {
+                    if((row + 1 < size && b.tile(col, row).value() == b.tile(col, row+1).value())
+                        || (col + 1 < size && b.tile(col, row).value() == b.tile(col+1, row).value())){
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
