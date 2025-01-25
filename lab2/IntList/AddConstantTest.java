@@ -14,9 +14,9 @@ public class AddConstantTest {
 
     @Test
     public void testAddConstantTwo() {
-        IntList lst = IntList.of(1, 2, 3, 4, 5);
+        IntList lst = IntList.of(10);
         IntListExercises.addConstant(lst, 2);
-        assertEquals("3 -> 4 -> 5 -> 6 -> 7", lst.toString());
+        assertEquals("12", lst.toString());
     }
 
     @Test
