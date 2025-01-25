@@ -1,6 +1,5 @@
 package timingtest;
 import edu.princeton.cs.algs4.Stopwatch;
-import org.checkerframework.checker.units.qual.A;
 
 /**
  * Created by hug.
@@ -24,42 +23,20 @@ public class TimeAList {
 
     public static void timeAListConstruction() {
         // TODO: YOUR CODE HERE
-//        AList<Integer> Ns = new AList<>();
-//        AList<Double> times = new AList<>();
-//        AList<Integer> opCounts = new AList<>();
-//        for(int i = 1000;i<=128000;i=i*2){
-//            Ns.addLast(i);
-//            opCounts.addLast(i);
-//            AList<Integer> test = new AList<>();
-//            Stopwatch sw = new Stopwatch();
-//            for(int j = 0;j<i;j++) {
-//                test.addLast(1);
-//            }
-//            double timeInSeconds = sw.elapsedTime();
-//            times.addLast(timeInSeconds);
-//        }
-//        printTimingTable(Ns, times, opCounts);
-        AList<Integer> L =new AList<>();
         AList<Integer> Ns = new AList<>();
         AList<Double> times = new AList<>();
         AList<Integer> opCounts = new AList<>();
-        int temp=1000;
-        while (temp<=128000){
-            Ns.addLast(temp);
-            opCounts.addLast(temp);
-            temp= temp*2;
-        }
-
-        for (int i = 0; i < Ns.size(); i++) {
-            int N = Ns.get(i);
-            int j = 0;
+        for(int i = 1000;i<=128000;i=i*2){
+            Ns.addLast(i);
+            opCounts.addLast(i);
+            AList<Integer> test = new AList<>();
             Stopwatch sw = new Stopwatch();
-            while (j<N){
-                L.addLast(j);
-                j = j+1;
+            for(int j = 0;j<i;j++) {
+                test.addLast(1);
             }
-            times.addLast(sw.elapsedTime());
+            double timeInSeconds = sw.elapsedTime();
+            times.addLast(timeInSeconds);
         }
-        printTimingTable(Ns,times,opCounts);
+        printTimingTable(Ns, times, opCounts);
     }
 }
