@@ -1,5 +1,6 @@
 public class SLList {
     Node sentinel;
+
     public SLList() {
         this.sentinel = new Node();
     }

@@ -16,7 +16,7 @@ public class Pokemon {
         int level = 18;
         Pokemon.change(p, level);
         p.printStats();
-        //Pokemon.trainer = "Ash";
+        Pokemon.trainer = "Ash";
         j.trainer = "Brock";
         p.printStats();
     }
