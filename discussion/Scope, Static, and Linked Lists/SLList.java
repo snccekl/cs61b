@@ -16,7 +16,8 @@ public class SLList {
         }
         if (curr.item == n) {
             return index;
-        } else {
+        }
+        else {
             return findFirstHelper(n, index + 1, curr.next);
         }
     }
